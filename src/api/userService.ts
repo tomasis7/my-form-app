@@ -1,5 +1,10 @@
-export const registerUser = async (userData: any) => {
-    const response = await fetch("https://jspnplaceholder.typicode.com/users", {
+interface UserData {
+    name: string;
+    email: string;
+}
+
+export const registerUser = async (userData: UserData) => {
+    const response = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -10,7 +15,7 @@ export const registerUser = async (userData: any) => {
 };
 
 export const fetchUsers = async () => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+    const response = await fetch("http://localhost:3000/users");
     return response.json();
 };
 

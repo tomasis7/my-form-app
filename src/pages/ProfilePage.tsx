@@ -2,8 +2,14 @@ import { useEffect, useState } from 'react';
 import { fetchUsers } from '../api/userService';
 import { useUserStore } from '../store/userStore';
 
+interface User {
+    id: number;
+    name: string;
+    email: string;
+}
+
 const ProfilePage = () => {
-    const [users, setUsers] = useState<any[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
     const { deleteUser, updateUser, fetchUsers: loadUsers } = useUserStore();
     const [editingId, setEditingId] = useState<string | null>(null);
     const [ editedUser, setEditedUser ] = useState({ name: '', email: '' });
