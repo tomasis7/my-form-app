@@ -6,7 +6,6 @@ import * as yup from "yup";
 import InputField from "./InputField";
 import PasswordField from "./PasswordField";
 import SubmitButton from "./SubmitButton";
-import { registerUser } from "../api/userService";
 import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({  
@@ -29,7 +28,7 @@ const Form = () => {
       alert("Registrering lyckades!");
       reset();
       navigate("/profile");
-    } catch (error){
+    } catch {
       alert("Något gick fel!");
     } finally {
       setLoading(false);
