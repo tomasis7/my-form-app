@@ -4,7 +4,7 @@ interface UserData {
 }
 
 export const registerUser = async (userData: UserData) => {
-    const response = await fetch("http://localhost:3000/users", {
+    const response = await fetch("https://json-server-vercel-three-beige.vercel.app/users", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -15,7 +15,7 @@ export const registerUser = async (userData: UserData) => {
 };
 
 export const fetchUsers = async () => {
-    const response = await fetch("http://localhost:3000/users");
+    const response = await fetch("https://json-server-vercel-three-beige.vercel.app/users");
     return response.json();
 };
 
