@@ -1,27 +1,20 @@
 import { useEffect, useState } from 'react';
-import { fetchUsers } from '../api/userService';
 import { useUserStore } from '../store/userStore';
 
 interface User {
-    id: number;
+    id: string;
     name: string;
     email: string;
 }
 
 const ProfilePage = () => {
-    const [users, setUsers] = useState<User[]>([]);
-    const { deleteUser, updateUser, fetchUsers: loadUsers } = useUserStore();
-    const [editingId, setEditingId] = useState<number | null>(null);
-    const [ editedUser, setEditedUser ] = useState({ name: '', email: '' });
+    const { users, deleteUser, updateUser, fetchUsers } = useUserStore();
+    const [editingId, setEditingId] = useState<string | null>(null);
+    const [editedUser, setEditedUser] = useState({ name: '', email: '' });
 
     useEffect(() => {
-        loadUsers();
-        const getUsers = async () => {
-            const data = await fetchUsers();
-            setUsers(data);
-        };
-        getUsers();
-    }, [loadUsers]);
+        fetchUsers();
+    }, [fetchUsers]);
 
     const handleEdit = (user: User) => {
         setEditingId(user.id);
@@ -30,12 +23,10 @@ const ProfilePage = () => {
 
     const handleUpdate = () => {
         if (editingId !== null) {
-            updateUser(editingId.toString(), editedUser);
+            updateUser(editingId, editedUser);
             setEditingId(null);
         }
     };
-
-
 
     return (
         <div>
@@ -44,27 +35,31 @@ const ProfilePage = () => {
                 <p>No users found.</p>
             ) : (
                 <ul>
-                    {users.map((user) => (
+                    {users.map((user: User) => (
                         <li key={user.id}>
                             {editingId === user.id ? (
                                 <span>
                                     <input
                                         type="text"
                                         value={editedUser.name}
-                                        onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })}
+                                        onChange={(e) =>
+                                            setEditedUser({ ...editedUser, name: e.target.value })
+                                        }
                                     />
                                     <input
                                         type="email"
                                         value={editedUser.email}
-                                        onChange={(e) => setEditedUser({ ...editedUser, email: e.target.value })}
+                                        onChange={(e) =>
+                                            setEditedUser({ ...editedUser, email: e.target.value })
+                                        }
                                     />
                                     <button onClick={handleUpdate}>Update</button>
-                                    </span>
+                                </span>
                             ) : (
                                 <span>
                                     <strong>{user.name}</strong> - {user.email}
                                     <button onClick={() => handleEdit(user)}>Edit</button>
-                                    <button onClick={() => deleteUser(user.id.toString())}>Delete</button>
+                                    <button onClick={() => deleteUser(user.id)}>Delete</button>
                                 </span>
                             )}
                         </li>
@@ -73,6 +68,6 @@ const ProfilePage = () => {
             )}
         </div>
     );
-}
+};
 
 export default ProfilePage;
