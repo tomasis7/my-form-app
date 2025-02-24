@@ -23,19 +23,18 @@ const Form = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: any) => {
-    setLoading(true);
-    const newUser = { id: Date.now(), ...data };
-    addUser(newUser);
-    reset();
+  const onSubmit = async (data: any) => {  
     try {
-      await registerUser(data);
+      await addUser(data);
       alert("Registrering lyckades!");
+      reset();
       navigate("/profile");
-    } catch {
+    } catch (error){
       alert("Något gick fel!");
-    } setLoading(false);
+    } finally {
+      setLoading(false);
     }
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

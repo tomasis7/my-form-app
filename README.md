@@ -5,11 +5,12 @@ My Form App är en minimal React-applikation byggd med Vite och TypeScript. Proj
 ## Projektbeskrivning
 
 Detta projekt exemplifierar:
+
 - Hämta användardata från ett API.
 - Lägga till nya användare.
 - Uppdatera och radera befintliga användare via API-anrop.
 - Användning av Zustand för state management.
-- Routing med React Router.
+- Routing med React Router v6+.
 
 ## Bygg och Kör Instruktioner
 
@@ -30,13 +31,17 @@ Detta projekt exemplifierar:
 3. **Starta JSON Server för API-integration:**
 
    Installera JSON Server globalt (om du inte redan gjort det):
+
    ```bash
    npm install -g json-server
    ```
+
    Starta sedan JSON Server genom att köra:
+
    ```bash
    json-server --watch db.json --port 3000
    ```
+
    Detta säkerställer att API:et med användardata är tillgängligt på [http://localhost:3000/users](http://localhost:3000/users).
 
 4. **Bygg för produktion:**
