@@ -11,7 +11,7 @@ interface User {
 const ProfilePage = () => {
     const [users, setUsers] = useState<User[]>([]);
     const { deleteUser, updateUser, fetchUsers: loadUsers } = useUserStore();
-    const [editingId, setEditingId] = useState<string | null>(null);
+    const [editingId, setEditingId] = useState<number | null>(null);
     const [ editedUser, setEditedUser ] = useState({ name: '', email: '' });
 
     useEffect(() => {
@@ -23,14 +23,14 @@ const ProfilePage = () => {
         getUsers();
     }, [loadUsers]);
 
-    const handleEdit = (user: any) => {
+    const handleEdit = (user: User) => {
         setEditingId(user.id);
         setEditedUser({ name: user.name, email: user.email });
     };
 
     const handleUpdate = () => {
-        if (editingId !==null) {
-            updateUser(editingId, editedUser);
+        if (editingId !== null) {
+            updateUser(editingId.toString(), editedUser);
             setEditingId(null);
         }
     };
@@ -64,7 +64,7 @@ const ProfilePage = () => {
                                 <span>
                                     <strong>{user.name}</strong> - {user.email}
                                     <button onClick={() => handleEdit(user)}>Edit</button>
-                                    <button onClick={() => deleteUser(user.id)}>Delete</button>
+                                    <button onClick={() => deleteUser(user.id.toString())}>Delete</button>
                                 </span>
                             )}
                         </li>
