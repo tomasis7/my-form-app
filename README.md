@@ -1,50 +1,83 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite - React Miniprojekt
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+My Form App är en minimal React-applikation byggd med Vite och TypeScript. Projektet demonstrerar hur man skapar en fullständig CRUD-applikation med API-integration, där användardata hämtas, läggs till, uppdateras och raderas.
 
-Currently, two official plugins are available:
+## Projektbeskrivning
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Detta projekt exemplifierar:
+- Hämta användardata från ett API.
+- Lägga till nya användare.
+- Uppdatera och radera befintliga användare via API-anrop.
+- Användning av Zustand för state management.
+- Routing med React Router.
 
-## Expanding the ESLint configuration
+## Bygg och Kör Instruktioner
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. **Installera beroenden:**
 
-- Configure the top-level `parserOptions` property like this:
+   ```bash
+   npm install
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+2. **Starta utvecklingsservern:**
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+   ```bash
+   npm run dev
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+   Applikationen kommer att vara tillgänglig på [http://localhost:5137](http://localhost:5137).
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+3. **Starta JSON Server för API-integration:**
+
+   Installera JSON Server globalt (om du inte redan gjort det):
+   ```bash
+   npm install -g json-server
+   ```
+   Starta sedan JSON Server genom att köra:
+   ```bash
+   json-server --watch db.json --port 3000
+   ```
+   Detta säkerställer att API:et med användardata är tillgängligt på [http://localhost:3000/users](http://localhost:3000/users).
+
+4. **Bygg för produktion:**
+
+   ```bash
+   npm run build
+   ```
+
+5. **För att testa produktionen lokalt:**
+
+   ```bash
+   npm run preview
+   ```
+
+## Demo
+
+Se en live-demo av applikationen här: [Live Demo](https://my-form-app-three.vercel.app/)
+
+## Uppfyllda krav
+
+- [x] Hämta användardata från API
+- [x] Lägga till användare
+- [x] Uppdatera användare
+- [x] Radera användare
+
+## Skoluppgift krav
+
+Todo-lista för React Miniprojekt
+
+Grundkrav (För godkänt)
+✅Skapa en React-app med TypeScript.
+✅Bygga minst 6 komponenter, varav 2 statefula.
+✅Implementera React Router för dynamiska URL:er.
+✅Använda Git & GitHub.
+✅Skapa en README.md med:
+-Titel och projektbeskrivning.
+-Instruktioner för hur projektet byggs och körs.
+-Länk till en demo (Netlify/Vercel).
+-Kryssa av kraven som är uppfyllda.
+✅Lämna in i tid.
+✅Genomföra en muntlig presentation på ca 10 minuter.
+⭐ Extra krav (För väl godkänt)
+✅Använda CSS-in-JS (t.ex. Styled-Components).
+✅Hämta och visa data från ett webb-API.
