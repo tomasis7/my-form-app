@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useUserStore } from "../store/userStore";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import InputField from "./InputField";
@@ -8,21 +9,25 @@ import SubmitButton from "./SubmitButton";
 import { registerUser } from "../api/userService";
 import { useNavigate } from "react-router-dom";
 
-const schema = yup.object().shape({
+const schema = yup.object().shape({  
   name: yup.string().required("Namn är obligatoriskt"),
   email: yup.string().email("Ogiltig e-post").required("E-post är obligatoriskt"),
   password: yup.string().min(6, "Lösenordet måste vara minst 6 tecken").required("Lösenord är obligatoriskt"),
 });
 
 const Form = () => {
+  const { addUser } = useUserStore();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: unknown) => {
+  const onSubmit = async (data: any) => {
     setLoading(true);
+    const newUser = { id: Date.now(), ...data };
+    addUser(newUser);
+    reset();
     try {
       await registerUser(data);
       alert("Registrering lyckades!");
