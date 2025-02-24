@@ -9,37 +9,66 @@ interface User {
 
 interface UserState {
     users: User[];
+    fetchUsers: () => Promise<void>;
     addUser: (user: User) => void;
     updateUser: (id: string, updatedUser: Partial<User>) => void;
     deleteUser: (id: string) => void;
-    loadUsers: () => void;
 }
 
-export const useUserStore = create<UserState>((set) => ({
-    users: JSON.parse(localStorage.getItem("users") || "[]"),
+const API_URL = "http://localhost:5173/users";
 
-    addUser: (user) =>
-        set((state) => {
-        const newUsers = [...state.users, user];
-        localStorage.setItem("users", JSON.stringify(newUsers));
-        return { users: newUsers };
-    }),
-    updateUser: (id, updatedUser) =>
-        set((state) => {
-        const newUsers = state.users.map((user) =>
-            user.id === id ? { ...user, ...updatedUser } : user
-        );
-        localStorage.setItem("users", JSON.stringify(newUsers));
-        return { users: newUsers };
-    }),
-    deleteUser: (id) =>
-        set((state) => {
-        const newUsers = state.users.filter((user) => user.id !== id);
-        localStorage.setItem("users", JSON.stringify(newUsers));
-        return { users: newUsers };
-    }),
-    loadUsers: () => {
-        const storedUsers = JSON.parse(localStorage.getItem("users") || "[]");
-        set({ users: storedUsers });
+export const useUserStore = create<UserState>((set) => ({
+  users: [],
+
+  fetchUsers: async () => {
+    try {
+      const response = await fetch(API_URL);
+      const data = await response.json();
+      set({ users: data });
+    } catch (error) {
+      console.error("Error fetching users:", error);
     }
+  },
+
+  addUser: async (user) => {
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+      const newUser = await response.json();
+      set((state) => ({ users: [...state.users, newUser] }));
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
+  },
+
+  updateUser: async (id, updatedUser) => {
+    try {
+      await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      });
+      set((state) => ({
+        users: state.users.map((user) =>
+          user.id === id ? { ...user, ...updatedUser } : user
+        ),
+      }));
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  },
+
+  deleteUser: async (id) => {
+    try {
+      await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+      });
+      set((state) => ({ users: state.users.filter((user) => user.id !== id) }));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  },
 }));

@@ -4,7 +4,7 @@ import { useUserStore } from '../store/userStore';
 
 const ProfilePage = () => {
     const [users, setUsers] = useState<any[]>([]);
-    const { users: storedUsers, deleteUser, updateUser, loadUsers } = useUserStore();
+    const { deleteUser, updateUser, fetchUsers: loadUsers } = useUserStore();
     const [editingId, setEditingId] = useState<string | null>(null);
     const [ editedUser, setEditedUser ] = useState({ name: '', email: '' });
 
