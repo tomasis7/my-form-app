@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  margin-bottom: 1rem;
+  margin: 1rem;
+
 `;
 
 const Label = styled.label`
   display: block;
   font-weight: bold;
+  
 `;
 
 const Input = styled.input`
@@ -14,6 +16,7 @@ const Input = styled.input`
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  
 `;
 
 const ErrorText = styled.p`
