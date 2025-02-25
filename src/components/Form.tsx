@@ -23,13 +23,15 @@ const Form = () => {
   });
 
   const onSubmit = async (data: any) => {  
+    setLoading(true)
     try {
       await addUser(data);
       alert("Registrering lyckades!");
       reset();
       navigate("/profile");
-    } catch {
+    } catch (error) {
       alert("Något gick fel!");
+      console.error(error);
     } finally {
       setLoading(false);
     }
