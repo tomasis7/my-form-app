@@ -1,16 +1,10 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import FormPage from "./pages/FormPage";
-import ProfilePage from "./pages/ProfilePage";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { routes } from "./routes";
+
+const router = createBrowserRouter(routes);
 
 const App = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/form" element={<FormPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
-    </Routes>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

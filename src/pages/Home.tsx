@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
-
 const Home = () => {
   return (
     <div>
       <h1>Welcome to My Form App</h1>
-      <Link to="/form">Go to Form</Link><br />
-      <Link to="/profile">Go to the list of registered users</Link>
-
+      <p>
+        This application demonstrates form handling and CRUD operations using
+        React and the React Router library.
+      </p>
     </div>
   );
 };
